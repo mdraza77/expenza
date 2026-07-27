@@ -1,6 +1,7 @@
 const express = require("express");
 const authRouter = require("./routes/auth.route");
 const groupRouter = require("./routes/group.route");
+const expenseRouter = require("./routes/expense.route");
 const cookieParser = require("cookie-parser");
 const cors = require("cors");
 
@@ -13,5 +14,6 @@ app.use(cors({ credentials: true, origin: "http://localhost:5173" }));
 
 app.use("/api/auth", authRouter);
 app.use("/api/groups", groupRouter);
+app.use("/api/expense", expenseRouter);
 
 module.exports = app;
