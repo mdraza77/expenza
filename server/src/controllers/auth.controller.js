@@ -4,8 +4,9 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const registerController = async (req, res) => {
-  const { name, username, email, password, profilePicture, currency } =
-    req.body;
+  // const { name, username, email, password, profilePicture, currency } =
+  //   req.body;
+  const { name, username, email, password } = req.body;
 
   const isUserAlreadyExists = await userModel.findOne({
     $or: [{ username }, { email }],
@@ -24,8 +25,8 @@ const registerController = async (req, res) => {
     username,
     email,
     password: hashedPassword,
-    profilePicture,
-    currency,
+    // profilePicture,
+    // currency,
   });
 
   const jwt_token = jwt.sign(
@@ -48,17 +49,10 @@ const registerController = async (req, res) => {
 };
 
 const loginController = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { login, password } = req.body;
 
   const user = await userModel.findOne({
-    $or: [
-      {
-        username: username,
-      },
-      {
-        email: email,
-      },
-    ],
+    $or: [{ username: login }, { email: login }],
   });
 
   if (!user) {
