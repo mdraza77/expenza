@@ -1,5 +1,6 @@
 import { useState } from "react";
 import api from "../../services/api";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [name, setName] = useState("");
@@ -7,6 +8,7 @@ const Register = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,6 +27,7 @@ const Register = () => {
       })
       .then((res) => {
         console.log(res.data);
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err.response?.data || err.message);

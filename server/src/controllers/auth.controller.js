@@ -3,6 +3,7 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
+// Register
 const registerController = async (req, res) => {
   // const { name, username, email, password, profilePicture, currency } =
   //   req.body;
@@ -48,6 +49,7 @@ const registerController = async (req, res) => {
   });
 };
 
+// Login
 const loginController = async (req, res) => {
   const { login, password } = req.body;
 
@@ -92,4 +94,34 @@ const loginController = async (req, res) => {
   });
 };
 
-module.exports = { registerController, loginController };
+// Logout
+const logoutController = (req, res) => {
+  res.clearCookie("jwt_token");
+
+  return res.status(200).json({
+    message: "Logout successful",
+  });
+};
+
+// Verify User
+const getMeController = async (req, res) => {
+  const user = await userModel.findById(req.user.id).select("-password");
+
+  if (!user) {
+    return res.status(404).json({
+      message: "User not found",
+    });
+  }
+
+  res.status(200).json({
+    message: "User verified",
+    user: user,
+  });
+};
+
+module.exports = {
+  registerController,
+  loginController,
+  logoutController,
+  getMeController,
+};

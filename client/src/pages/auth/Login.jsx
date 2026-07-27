@@ -1,11 +1,12 @@
 import { useState } from "react";
 import axios from "axios";
 import api from "../../services/api";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [login, setLogin] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -17,6 +18,7 @@ const Login = () => {
       })
       .then((res) => {
         console.log(res.data);
+        navigate("/dashboard");
       })
       .catch((err) => {
         console.log(err.response?.data || err.message);
